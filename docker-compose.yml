@@ -1,15 +1,21 @@
 version: '3'
 services:
+  # can call this service whatever: node, web, etc.
   app:
     container_name: docker-node-mongo
+    # if it fails always restart it
     restart: always
+    # look for the docker file in the same dir to build from
     build: .
     ports:
-      - '80:3000'
-    external_links:
+      # where 80 is local and 3000 is docker
+      - '82:3000'
+    # want to map our app service to our mongo service
+    links:
       - mongo
   mongo:
     container_name: mongo
+    # by defining the image, it will automatically pull from docker hub
     image: mongo
     ports:
-      - '27017:27017'
+      - '27107:27017'
